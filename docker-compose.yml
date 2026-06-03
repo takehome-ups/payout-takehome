@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: payout
+      POSTGRES_PASSWORD: payout
+      POSTGRES_DB: payout
+    ports:
+      - "54329:5432"
+    volumes:
+      - ./server/src/db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U payout"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
