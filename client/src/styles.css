@@ -1,0 +1,16 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  background: #0f1117;
+  color: #e7e9ee;
+}
+body { margin: 0; }
+.layout { display: grid; grid-template-columns: 1fr 320px; gap: 16px; padding: 16px; max-width: 1200px; margin: 0 auto; }
+.stage { aspect-ratio: 5 / 3; background: #161a23; border-radius: 12px; overflow: hidden; }
+.panel { background: #161a23; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.panel h2 { margin: 0; font-size: 14px; text-transform: uppercase; letter-spacing: .06em; color: #8b93a7; }
+button { background: #f5b301; color: #111; border: 0; border-radius: 8px; padding: 10px 14px; font-weight: 700; cursor: pointer; }
+button:disabled { opacity: .5; cursor: default; }
+select, input { background: #0f1117; color: inherit; border: 1px solid #2a3040; border-radius: 6px; padding: 8px; }
+code { font-size: 12px; word-break: break-all; }
+@media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
