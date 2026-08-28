@@ -33,6 +33,9 @@ export async function handle(message: Message<SettlePayload>): Promise<void> {
 
 export async function runWorker(signal: AbortSignal): Promise<void> {
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  const stats = { inflight: 0, processed: 0 };
+  const heartbeat = setInterval(() => log('worker.heartbeat', stats), 10_000);
+  signal.addEventListener('abort', () => clearInterval(heartbeat));
 
   const loop = async () => {
     while (!signal.aborted) {
@@ -41,10 +44,14 @@ export async function runWorker(signal: AbortSignal): Promise<void> {
         await sleep(env.workerPollMs);
         continue;
       }
+      stats.inflight += 1;
       try {
         await handle(message);
+        stats.processed += 1;
       } catch (err) {
         log('settlement.error', { message_id: message.id, error: (err as Error).message });
+      } finally {
+        stats.inflight -= 1;
       }
     }
   };
