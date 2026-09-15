@@ -12,6 +12,7 @@
     "start": "npm run start -w server",
     "worker": "npm run worker -w server",
     "test": "npm test -w server",
+    "harness": "tsx harness/public-chaos.ts",
     "client": "npm run dev -w client"
   },
   "devDependencies": {
